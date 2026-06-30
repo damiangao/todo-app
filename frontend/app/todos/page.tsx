@@ -162,7 +162,7 @@ export default function TodosPage() {
       {/* Header */}
       <header className="cp-header">
         <div className="cp-header__logo cp-glitch">
-          NIGHT<span>.</span>CITY
+          FIXER<span>//</span>BOARD
         </div>
         <div className="cp-flex">
           <span className="cp-dim cp-mono" style={{ fontSize: 12 }}>

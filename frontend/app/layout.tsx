@@ -2,8 +2,8 @@ import './globals.css';
 import { AuthProvider } from '../lib/auth-context';
 
 export const metadata = {
-  title: 'NIGHT.CITY // Todo',
-  description: 'Cyberpunk 2077 todo list',
+  title: 'FIXER // BOARD',
+  description: 'Cyberpunk task dispatcher',
   manifest: '/manifest.webmanifest',
   themeColor: '#fcee0a',
 };
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/icon-192.svg" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="NIGHT.CITY" />
+        <meta name="apple-mobile-web-app-title" content="FIXER // BOARD" />
       </head>
       <body>
         <AuthProvider>{children}</AuthProvider>

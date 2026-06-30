@@ -57,8 +57,8 @@ function LoginInner() {
   return (
     <div className="cp-auth">
       <div className="cp-auth__panel">
-        <div className="cp-auth__title">NIGHT.CITY</div>
-        <div className="cp-auth__subtitle">// todo.exe</div>
+        <div className="cp-auth__title">FIXER // BOARD</div>
+        <div className="cp-auth__subtitle">// dispatcher.exe</div>
 
         {error && <div className="cp-auth__error">[ERR] {error}</div>}
 

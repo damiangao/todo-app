@@ -1,7 +1,7 @@
 {
-  "name": "NIGHT.CITY // Todo",
-  "short_name": "NIGHT.CITY",
-  "description": "多端同步 Todo · 赛博朋克风",
+  "name": "FIXER // BOARD",
+  "short_name": "FIXER",
+  "description": "多端同步 Todo · 任务派单板",
   "start_url": "/todos",
   "scope": "/",
   "display": "standalone",
