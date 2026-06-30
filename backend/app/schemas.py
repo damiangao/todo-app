@@ -41,8 +41,6 @@ class TodoBase(BaseModel):
     # 前端必须传 .toISOString() 出来的 Z 后缀字符串
     due_date: Optional[datetime] = None
     recurrence: RecurrenceEnum = RecurrenceEnum.NONE
-    notify_enabled: bool = False
-    notify_before_minutes: int = Field(default=10, ge=0, le=1440)
 
     @field_validator("due_date")
     @classmethod
@@ -67,8 +65,6 @@ class TodoUpdate(BaseModel):
     category: Optional[str] = Field(default=None, max_length=50)
     due_date: Optional[datetime] = None
     recurrence: Optional[RecurrenceEnum] = None
-    notify_enabled: Optional[bool] = None
-    notify_before_minutes: Optional[int] = Field(default=None, ge=0, le=1440)
 
 
 class TodoOut(TodoBase):
@@ -77,7 +73,6 @@ class TodoOut(TodoBase):
     completed: bool
     completed_at: Optional[datetime] = None
     recurrence_source_id: Optional[int] = None
-    notified_at: Optional[datetime] = None
     created_at: datetime
     updated_at: datetime
     children: list["TodoOut"] = []

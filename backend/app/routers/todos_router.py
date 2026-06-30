@@ -69,8 +69,6 @@ def create_todo(
         due_date=payload.due_date,
         recurrence=payload.recurrence,
         parent_id=payload.parent_id,
-        notify_enabled=payload.notify_enabled,
-        notify_before_minutes=payload.notify_before_minutes,
     )
     db.add(todo)
     db.commit()
@@ -130,8 +128,6 @@ def update_todo(
                 priority=todo.priority,
                 category=todo.category,
                 recurrence=todo.recurrence,
-                notify_enabled=todo.notify_enabled,
-                notify_before_minutes=todo.notify_before_minutes,
                 due_date=_next_due_date(todo.due_date, todo.recurrence)
                          if todo.due_date else None,
                 recurrence_source_id=todo.id,

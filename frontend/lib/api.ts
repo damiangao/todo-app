@@ -22,9 +22,6 @@ export type Todo = {
   due_date: string | null;
   recurrence: Recurrence;
   recurrence_source_id: number | null;
-  notify_enabled: boolean;
-  notify_before_minutes: number;
-  notified_at: string | null;
   created_at: string;
   updated_at: string;
   children: Todo[];
@@ -37,8 +34,6 @@ export type CreateTodoInput = {
   category?: string | null;
   due_date?: string | null;
   recurrence?: Recurrence;
-  notify_enabled?: boolean;
-  notify_before_minutes?: number;
   parent_id?: number | null;
 };
 
@@ -87,8 +82,4 @@ export const api = {
   updateTodo: (id: number, patch: Partial<CreateTodoInput & { completed: boolean }>) =>
     http<Todo>(`/api/todos/${id}`, { method: "PATCH", json: patch }),
   deleteTodo: (id: number) => http<void>(`/api/todos/${id}`, { method: "DELETE" }),
-  listDueSoon: (windowMinutes = 60) =>
-    http<Todo[]>(`/api/todos/due-soon?window_minutes=${windowMinutes}`),
-  ackNotify: (id: number) =>
-    http<void>(`/api/todos/${id}/ack-notify`, { method: "POST" }),
 };

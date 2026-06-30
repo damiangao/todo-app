@@ -70,9 +70,6 @@ class Todo(Base):
         nullable=False,
     )
     recurrence_source_id = Column(Integer, ForeignKey("todos.id", ondelete="SET NULL"), nullable=True)
-    notify_enabled = Column(Boolean, default=False, nullable=False)
-    notify_before_minutes = Column(Integer, default=10, nullable=False)
-    notified_at = Column(DateTime(timezone=True), nullable=True)
     created_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
     updated_at = Column(DateTime(timezone=True), default=utcnow, onupdate=utcnow, nullable=False)
 

@@ -1,4 +1,4 @@
-"""v2 单测: auth + todos + 隔离 + 重复任务 + due-soon"""
+"""v2 单测: auth + todos + 隔离 + 重复任务"""
 import os
 os.environ.setdefault("DATABASE_URL", "postgresql+psycopg2://todouser:TZX6DsIwVKtiK3s3F9HhKcp4wRfNCWohjrFqvNAi__Y@localhost:5432/todoapp")
 os.environ.setdefault("JWT_SECRET", "testsecret")
@@ -75,16 +75,12 @@ def test_create_with_all_fields(client):
         "priority": "urgent",
         "category": "主线",
         "recurrence": "daily",
-        "notify_enabled": True,
-        "notify_before_minutes": 30,
     })
     assert r.status_code == 201
     body = r.json()
     assert body["priority"] == "urgent"
     assert body["category"] == "主线"
     assert body["recurrence"] == "daily"
-    assert body["notify_enabled"] is True
-    assert body["notify_before_minutes"] == 30
 
 
 def test_user_isolation(client):
@@ -137,42 +133,6 @@ def test_recurring_generates_next(client):
     assert next_todo["completed"] is False
     # due_date 应该是 2030-01-02
     assert next_todo["due_date"].startswith("2030-01-02")
-
-
-def test_due_soon_endpoint(client):
-    _register(client, "k@cp.net")
-    # 30 分钟后到期 + 通知
-    from datetime import datetime, timezone, timedelta
-    due = (datetime.now(timezone.utc) + timedelta(minutes=30)).isoformat()
-    client.post("/api/todos", json={
-        "title": "soon",
-        "due_date": due,
-        "notify_enabled": True,
-        "notify_before_minutes": 60,  # 提前 60 分钟
-    })
-    # 60 分钟窗口应看到
-    r = client.get("/api/todos/due-soon?window_minutes=60").json()
-    assert len(r) == 1
-    assert r[0]["title"] == "soon"
-
-
-def test_ack_notify(client):
-    _register(client, "l@cp.net")
-    from datetime import datetime, timezone, timedelta
-    due = (datetime.now(timezone.utc) + timedelta(minutes=30)).isoformat()
-    r = client.post("/api/todos", json={
-        "title": "ack me",
-        "due_date": due,
-        "notify_enabled": True,
-    }).json()
-    # ack
-    ack = client.post(f"/api/todos/{r['id']}/ack-notify")
-    assert ack.status_code == 204
-    # due-soon 仍返回 (前端靠 notified_at 判断, 不剔除)
-    assert len(client.get("/api/todos/due-soon").json()) == 1
-    # 字段已更新
-    me = client.get(f"/api/todos/{r['id']}").json()
-    assert me["notified_at"] is not None
 
 
 def test_subtask(client):
