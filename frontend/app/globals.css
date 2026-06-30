@@ -1,0 +1,493 @@
+/* ====== Cyberpunk 2077 Theme Tokens ====== */
+:root {
+  /* 底色 */
+  --cp-bg: #0a0e0a;
+  --cp-bg-elev: #12171c;
+  --cp-bg-panel: #0d1117;
+  --cp-border: #1f2733;
+
+  /* 主色 */
+  --cp-yellow: #fcee0a;     /* V 标志性的荧光黄 */
+  --cp-yellow-glow: rgba(252, 238, 10, 0.5);
+  --cp-cyan: #00f0ff;       /* 霓虹青 */
+  --cp-cyan-glow: rgba(0, 240, 255, 0.5);
+  --cp-magenta: #ff003c;    /* 危险/紧急 */
+  --cp-magenta-glow: rgba(255, 0, 60, 0.5);
+  --cp-green: #00ff9f;      /* 成功 */
+  --cp-orange: #ff6b00;     /* 警告 */
+
+  /* 文本 */
+  --cp-fg: #e4e4e4;
+  --cp-fg-dim: #8b95a3;
+  --cp-fg-muted: #4a5566;
+
+  /* 字体 */
+  --cp-font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --cp-font-display: 'Rajdhani', 'Orbitron', var(--cp-font-mono);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: var(--cp-bg);
+  color: var(--cp-fg);
+  font-family: var(--cp-font-mono);
+  font-size: 14px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ====== 扫描线 + 噪点（赛博朋克氛围） ====== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 240, 255, 0.02) 0,
+      rgba(0, 240, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+/* ====== 字体加载（Google Fonts via 国内镜像不可靠, 先 fallback） ====== */
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), local('Consolas'), local('Menlo');
+  font-display: swap;
+}
+
+/* ====== 通用元素 ====== */
+h1, h2, h3, h4 {
+  font-family: var(--cp-font-display);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+a {
+  color: var(--cp-cyan);
+  text-decoration: none;
+  transition: text-shadow 0.15s;
+}
+a:hover {
+  text-shadow: 0 0 8px var(--cp-cyan-glow);
+}
+
+input, textarea, select, button {
+  font-family: var(--cp-font-mono);
+  font-size: 14px;
+}
+
+input[type="text"], input[type="email"], input[type="password"],
+input[type="datetime-local"], textarea, select {
+  background: var(--cp-bg-panel);
+  color: var(--cp-fg);
+  border: 1px solid var(--cp-border);
+  padding: 10px 12px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--cp-yellow);
+  box-shadow: 0 0 0 1px var(--cp-yellow), 0 0 10px var(--cp-yellow-glow);
+}
+input::placeholder, textarea::placeholder {
+  color: var(--cp-fg-muted);
+}
+
+/* ====== 斜切按钮（Cyberpunk 标志 clip-path） ====== */
+.cp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--cp-yellow);
+  border: none;
+  font-family: var(--cp-font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s;
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  background-color: rgba(252, 238, 10, 0.08);
+  border-top: 1px solid var(--cp-yellow);
+  border-bottom: 1px solid var(--cp-yellow);
+}
+.cp-btn:hover {
+  background-color: var(--cp-yellow);
+  color: var(--cp-bg);
+  text-shadow: none;
+  box-shadow: 0 0 20px var(--cp-yellow-glow);
+}
+.cp-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.cp-btn--ghost {
+  background-color: transparent;
+  color: var(--cp-cyan);
+  border-top-color: var(--cp-cyan);
+  border-bottom-color: var(--cp-cyan);
+}
+.cp-btn--ghost:hover {
+  background-color: var(--cp-cyan);
+  color: var(--cp-bg);
+  box-shadow: 0 0 20px var(--cp-cyan-glow);
+}
+.cp-btn--danger {
+  color: var(--cp-magenta);
+  border-top-color: var(--cp-magenta);
+  border-bottom-color: var(--cp-magenta);
+}
+.cp-btn--danger:hover {
+  background-color: var(--cp-magenta);
+  color: var(--cp-bg);
+  box-shadow: 0 0 20px var(--cp-magenta-glow);
+}
+.cp-btn--sm {
+  padding: 6px 12px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+
+/* ====== 标签 / 徽章 ====== */
+.cp-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--cp-bg-elev);
+  color: var(--cp-fg-dim);
+  border: 1px solid var(--cp-border);
+}
+.cp-tag--urgent { color: var(--cp-yellow); border-color: var(--cp-yellow); background: rgba(252, 238, 10, 0.12); font-weight: 700; }
+.cp-tag--high { color: var(--cp-orange); border-color: var(--cp-orange); }
+.cp-tag--medium { color: var(--cp-cyan); border-color: var(--cp-cyan); }
+.cp-tag--low { color: var(--cp-fg-dim); }
+.cp-tag--category { color: var(--cp-green); border-color: var(--cp-green); }
+.cp-tag--recurring { color: var(--cp-orange); border-color: var(--cp-orange); }
+
+/* ====== 面板 ====== */
+.cp-panel {
+  background: var(--cp-bg-panel);
+  border: 1px solid var(--cp-border);
+  position: relative;
+}
+.cp-panel::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 12px; height: 12px;
+  border-top: 2px solid var(--cp-yellow);
+  border-left: 2px solid var(--cp-yellow);
+}
+.cp-panel::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 12px; height: 12px;
+  border-bottom: 2px solid var(--cp-yellow);
+  border-right: 2px solid var(--cp-yellow);
+}
+
+/* ====== 任务条目 ====== */
+.cp-todo {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--cp-bg-panel);
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+  position: relative;
+}
+.cp-todo:hover {
+  background: var(--cp-bg-elev);
+  border-left-color: var(--cp-yellow);
+  box-shadow: inset 0 0 20px rgba(252, 238, 10, 0.05);
+}
+.cp-todo--urgent { border-left-color: var(--cp-yellow); }
+.cp-todo--urgent::after {
+  content: '⚠';
+  position: absolute;
+  top: 4px; right: 8px;
+  color: var(--cp-yellow);
+  font-weight: 900;
+  text-shadow: 0 0 6px var(--cp-yellow-glow);
+}
+.cp-todo--completed { opacity: 0.5; }
+.cp-todo--completed .cp-todo__title { text-decoration: line-through; }
+.cp-todo--overdue {
+  border-left-color: var(--cp-magenta);
+  background: linear-gradient(90deg, rgba(255, 0, 60, 0.12) 0%, transparent 30%);
+  box-shadow: inset 4px 0 0 0 var(--cp-magenta), 0 0 12px rgba(255, 0, 60, 0.2);
+}
+.cp-todo--overdue::before {
+  content: '💀';
+  position: absolute;
+  top: 4px; left: 8px;
+  color: var(--cp-magenta);
+  text-shadow: 0 0 8px var(--cp-magenta-glow);
+  animation: cp-blink 1.2s infinite;
+}
+.cp-todo--overdue .cp-todo__due {
+  color: var(--cp-magenta);
+  font-weight: 700;
+  animation: cp-blink 1.2s infinite;
+}
+.cp-todo--due-today .cp-todo__due { color: var(--cp-yellow); }
+
+.cp-todo__check {
+  width: 18px; height: 18px;
+  border: 1px solid var(--cp-border);
+  background: var(--cp-bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.15s;
+}
+.cp-todo__check:hover { border-color: var(--cp-yellow); }
+.cp-todo__check--checked {
+  background: var(--cp-yellow);
+  border-color: var(--cp-yellow);
+  color: var(--cp-bg);
+}
+
+.cp-todo__body { flex: 1; min-width: 0; }
+.cp-todo__title {
+  font-size: 14px;
+  color: var(--cp-fg);
+  word-break: break-word;
+}
+.cp-todo__meta {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 11px;
+  color: var(--cp-fg-dim);
+}
+.cp-todo__desc {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--cp-fg-dim);
+  word-break: break-word;
+}
+
+.cp-todo__actions {
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.cp-todo:hover .cp-todo__actions { opacity: 1; }
+
+/* ====== 子任务缩进 ====== */
+.cp-todo--child { padding-left: 48px; }
+.cp-todo--child::before {
+  content: '└';
+  position: absolute;
+  left: 30px;
+  top: 12px;
+  color: var(--cp-fg-muted);
+  font-size: 12px;
+}
+
+/* ====== 动画 ====== */
+@keyframes cp-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+@keyframes cp-flicker {
+  0%, 100% { opacity: 1; }
+  41% { opacity: 1; }
+  42% { opacity: 0.8; }
+  43% { opacity: 1; }
+  45% { opacity: 0.3; }
+  46% { opacity: 1; }
+}
+
+.cp-flicker { animation: cp-flicker 3s infinite; }
+
+/* ====== 布局 ====== */
+.cp-app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+.cp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0 24px;
+  border-bottom: 1px solid var(--cp-border);
+  margin-bottom: 24px;
+}
+.cp-header__logo {
+  font-family: var(--cp-font-display);
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--cp-yellow);
+  text-shadow: 0 0 10px var(--cp-yellow-glow);
+}
+.cp-header__logo span { color: var(--cp-cyan); }
+
+.cp-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 8px;
+  background: var(--cp-bg-elev);
+  border: 1px solid var(--cp-border);
+}
+
+.cp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  background: var(--cp-bg-elev);
+  border: 1px solid var(--cp-border);
+  position: relative;
+}
+.cp-form__row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.cp-form__row > * { flex: 1; }
+.cp-form__row .cp-btn { flex: 0 0 auto; }
+
+.cp-list { display: flex; flex-direction: column; }
+
+.cp-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--cp-fg-muted);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+.cp-empty::before {
+  content: '//';
+  display: block;
+  font-size: 32px;
+  color: var(--cp-yellow);
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+/* ====== 登录页 ====== */
+.cp-auth {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.cp-auth__panel {
+  width: 100%;
+  max-width: 380px;
+  padding: 32px 28px;
+  background: var(--cp-bg-panel);
+  border: 1px solid var(--cp-yellow);
+  position: relative;
+  box-shadow: 0 0 40px rgba(252, 238, 10, 0.15);
+}
+.cp-auth__title {
+  font-family: var(--cp-font-display);
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--cp-yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 4px;
+  text-shadow: 0 0 10px var(--cp-yellow-glow);
+}
+.cp-auth__subtitle {
+  text-align: center;
+  color: var(--cp-fg-dim);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  margin-bottom: 24px;
+}
+.cp-auth__field { margin-bottom: 14px; }
+.cp-auth__field label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--cp-fg-dim);
+  margin-bottom: 6px;
+}
+.cp-auth__error {
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  background: rgba(255, 0, 60, 0.1);
+  border-left: 2px solid var(--cp-magenta);
+  color: var(--cp-magenta);
+  font-size: 12px;
+}
+.cp-auth__switch {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--cp-fg-dim);
+}
+
+/* ====== Glitch hover ====== */
+.cp-glitch {
+  position: relative;
+  display: inline-block;
+}
+.cp-glitch:hover { animation: cp-flicker 0.3s infinite; }
+
+/* ====== 滚动条 ====== */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--cp-bg); }
+::-webkit-scrollbar-thumb { background: var(--cp-border); }
+::-webkit-scrollbar-thumb:hover { background: var(--cp-yellow); }
+
+/* ====== 工具 ====== */
+.cp-mb-2 { margin-bottom: 8px; }
+.cp-mb-3 { margin-bottom: 12px; }
+.cp-mb-4 { margin-bottom: 16px; }
+.cp-flex { display: flex; gap: 8px; align-items: center; }
+.cp-muted { color: var(--cp-fg-muted); }
+.cp-dim { color: var(--cp-fg-dim); }
+.cp-mono { font-family: var(--cp-font-mono); }
